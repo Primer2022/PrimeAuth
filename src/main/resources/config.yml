@@ -1,0 +1,21 @@
+not-player: "&cИспользуй команду от имени игрока!"
+
+not-equals: "&cПароли не совпадают!"
+
+register-message:
+  - "&c/register [пароль] [повтор_пароля]"
+
+auth-message:
+  - "&c/login [пароль]"
+
+low-password-leght: "&cИспользуйте пароль минимум из 6 символов!"
+
+high-password-leght: "&cИспользуйте пароль максимум из 64 символов!"
+
+incorrect-password: "&cВы ввели неверный пароль!"
+
+succes-register: "&aВы успешно зарегистрировали аккаунт!"
+
+succes-login: "&aВы успешно вошли в аккаунт!"
+
+message-delay: 5
