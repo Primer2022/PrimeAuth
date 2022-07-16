@@ -13,11 +13,11 @@ public final class Main extends JavaPlugin {
 
     public static Database database = new Database();
 
-    private final String HOST = "89.250.9.75";
+    private final String HOST = "localhost";
     private final int PORT = 3306;
-    private final String DB_NAME = "primer";
-    private final String LOGIN = "primer";
-    private final String PASS = "11111";
+    private final String DB_NAME = "name";
+    private final String LOGIN = "login";
+    private final String PASS = "password";
 
     public static Main main;
 

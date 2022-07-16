@@ -22,7 +22,7 @@ public class Database {
 
         src = new HikariDataSource(config);
 
-        try(Connection cn = connect(); Statement st = cn.createStatement()) {
+        try (Connection cn = connect(); Statement st = cn.createStatement()) {
             st.executeUpdate("CREATE TABLE IF NOT EXISTS `users` (id INT NOT NULL AUTO_INCREMENT, name VARCHAR(30), password VARCHAR(32), PRIMARY KEY(id))");
         }
     }
@@ -53,7 +53,7 @@ public class Database {
                     throw new RuntimeException(e);
                 }
                 try {
-                    prSt.setString( 2, password);
+                    prSt.setString(2, password);
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
@@ -71,53 +71,23 @@ public class Database {
     public String getPassword(String playerName) throws SQLException, ClassNotFoundException {
         final String[] password = {null};
         String sql = "SELECT `password` FROM `users` WHERE `name` = '" + playerName + "'";
-        BukkitRunnable bukkitRunnable = new BukkitRunnable() {
-            @Override
-            public void run() {
-                try {
-                    createTable();
-                } catch (SQLException | ClassNotFoundException e) {
-                    throw new RuntimeException(e);
-                }
-                try {
-                    PreparedStatement prSt = connect().prepareStatement(sql);
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
+        long time = System.currentTimeMillis();
+        System.out.println(time);
+        createTable();
+        PreparedStatement prSt = connect().prepareStatement(sql);
 
-                Statement statement = null;
-                try {
-                    statement = connect().createStatement();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-                ResultSet res = null;
-                try {
-                    res = statement.executeQuery(sql);
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
+        Statement statement = null;
+        statement = connect().createStatement();
+        ResultSet res = null;
+        res = statement.executeQuery(sql);
 
-                while (true) {
-                    try {
-                        if (!res.next()) break;
-                    } catch (SQLException e) {
-                        throw new RuntimeException(e);
-                    }
-                    try {
-                        password[0] = res.getString(1);
-                    } catch (SQLException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-                try {
-                    statement.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        };
-        bukkitRunnable.runTaskAsynchronously(Main.main);
+        while (true) {
+            if (!res.next()) break;
+            password[0] = res.getString(1);
+        }
+
+        statement.close();
+        System.out.println(System.currentTimeMillis() - time);
         return password[0];
     }
 
